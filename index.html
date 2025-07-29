@@ -1,0 +1,671 @@
+﻿ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Familiarización del Proyecto: Core de Seguros Grupo INS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Corporate Accents -->
+    <!-- Application Structure Plan: Se ha diseñado una SPA con navegación por pestañas (Inicio, Alcance, Mi Rol, Metodología, Gobernanza, Recursos). Esta estructura segmenta la información compleja del kickoff en bloques temáticos y digeribles. La sección más importante es "Mi Rol", que es interactiva y permite al usuario seleccionar su perfil para ver dinámicamente sus responsabilidades y formación obligatoria. Este enfoque orientado a roles mejora drásticamente la usabilidad en comparación con un documento lineal, ya que cada miembro del equipo puede acceder directamente a la información que más le concierne, facilitando una incorporación rápida y eficiente. -->
+    <!-- Visualization & Content Choices: 
+        - Visión General (Texto/Iconos): Informar. Presentación clara de los objetivos.
+        - Fases del Proyecto (Gráfico de Barras - Chart.js): Informar/Organizar. Visualiza las etapas principales del proyecto de forma sencilla. Interacción con tooltips.
+        - Líneas de Servicio (Tarjetas HTML/CSS): Organizar. Agrupa los 15 servicios en categorías lógicas para una fácil comprensión.
+        - Procesos de Negocio (Diagrama de Flujo HTML/CSS): Organizar. Muestra la cadena de valor del seguro que se abordará.
+        - Roles y Responsabilidades (Selector Dinámico JS): Personalizar/Informar. El usuario selecciona su rol y el contenido se actualiza. Es la interacción clave para personalizar la experiencia.
+        - Formación Obligatoria (Lista de Verificación Dinámica JS): Informar/Organizar. Se muestra la formación específica para el rol seleccionado.
+        - Seguridad y Comunicación (Acordeón HTML/JS): Organizar. Condensa información densa en secciones expandibles.
+        - Justificación: La combinación de texto, diagramas visuales y elementos interactivos convierte un documento estático en una herramienta de aprendizaje dinámica, adaptada a las necesidades de cada rol dentro del equipo del proyecto. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-active { border-color: #0284c7; color: #0284c7; background-color: #f0f9ff; }
+        .tab-inactive { border-color: transparent; color: #475569; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .modal-content { max-height: 80vh; }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800">
+
+    <div class="min-h-screen">
+        <header class="bg-white shadow-sm sticky top-0 z-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="flex flex-col sm:flex-row justify-between items-center"> 
+				<img src="logo-consis.png" alt="Logo Consis" class="h-10"> 
+                    <div>
+					   
+				    <!-- Título -->
+                        <div class="text-2xl font-bold text-sky-800">
+			               <!-- <img src="logo-consis.png" alt="Logo Consis" class="h-10"> -->
+                            Grupo<span class="font-normal text-sky-600"> INS </span> | Proyecto Core de Seguros | Acsel Suite
+                        </div> 
+                    <!--    <h1 class="text-2xl font-bold text-slate-900">Proyecto Core de Seguros</h1>
+                        <p class="text-sm text-slate-500">Cliente: <span class="font-semibold">Grupo INS</span> | Solución: <span class="font-semibold">Consis Acsel/Suite</span></p> -->
+                    </div>
+                    <div class="mt-4 sm:mt-0">
+                       	 <img src="logo-university.png" alt="Logo Consis University" class="h-10">
+						<!-- <img src="https://i.imgur.com/r113n4x.png" alt="Logos Consis y Grupo INS" class="h-10" onerror="this.style.display='none'"> -->
+                    </div>
+                </div>
+                <nav class="mt-4 -mb-4 border-b border-slate-200">
+                    <div class="flex flex-wrap -mb-px space-x-4">
+                        <button class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" data-tab="inicio">
+                            <span class="mr-2">🏠</span>Inicio
+                        </button>
+                        <button class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" data-tab="alcance">
+                            <span class="mr-2">🎯</span>Alcance y Procesos
+                        </button>
+                        <button class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" data-tab="rol">
+                            <span class="mr-2">👤</span>Mi Rol y Formación
+                        </button>
+                        <button class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" data-tab="metodologia">
+                            <span class="mr-2">🛠️</span>Metodología
+                        </button>
+                        <button class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" data-tab="gobernanza">
+                            <span class="mr-2">🛡️</span>Gobernanza
+                        </button>
+                         <button class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" data-tab="recursos">
+                            <span class="mr-2">📚</span>Recursos Clave
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            
+            <section id="inicio" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+					<div class="text-2xl font-bold text-sky-800">
+					<div class="flex flex-col sm:flex-row justify-between items-center">
+					
+					<!--    <h1 class="text-4xl md:text-5xl font-bold text-sky-900 mb-4">Capacitación para la Modernización del Grupo</h1> -->
+						<h2 class="text-xl font-bold text-sky-800 mb-4">Bienvenido al Proyecto de Transformación del Grupo INS</h2>
+						<img src="logo-ins.png" alt="Logo Grupo INS" class="h-10">
+                    </div>
+					
+				    </div>
+					
+                 <!--   <h2 class="text-xl font-bold text-sky-800 mb-4">Bienvenido al Proyecto de Transformación del Grupo INS</h2>
+					<img src="logo-ins.png" alt="Logo Grupo INS" class="h-10">  
+				 -->
+                    <p class="mb-4">Este es un proyecto estratégico y de gran escala para nuestro cliente, el Grupo INS, y su participación es fundamental para nuestro éxito. El objetivo de esta aplicación es proporcionarle una visión general y contextualizar su rol para una integración rápida y efectiva. Aquí encontrará de forma interactiva toda la información clave del documento de familiarización.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
+                            <h3 class="font-bold text-sky-900">🎯 Objetivo Principal del Cliente</h3>
+                            <p class="text-sm mt-2">Modernizar su plataforma tecnológica Core de Seguros para mantener su liderazgo en un mercado competitivo, buscando una solución robusta, flexible e integrada que optimice sus procesos y mejore la experiencia de sus clientes.</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                            <h3 class="font-bold text-green-900">🚀 Nuestra Solución</h3>
+                            <p class="text-sm mt-2">Implementaremos nuestra prestigiosa **Acsel/Suite**, una solución Core de Seguros de clase mundial con más de 36 años de experiencia y más de 100 despliegues exitosos a nivel global, para gestionar todo el ciclo de vida de los seguros.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3 class="text-lg font-semibold text-slate-700 mb-4 text-center">Fases Principales del Proyecto</h3>
+                        <div class="chart-container">
+                            <canvas id="projectPhasesChart"></canvas>
+                        </div>
+                        <p class="text-xs text-center text-slate-500 mt-2">Este gráfico muestra las grandes etapas que componen el proyecto. La implementación y la migración se ejecutarán por demanda a lo largo del contrato.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="alcance" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-bold text-sky-800 mb-2">Alcance del Proyecto y Líneas de Servicio</h2>
+                    <p class="mb-6 text-sm text-slate-600">El proyecto se divide en líneas de servicio que cubren todo el ciclo de vida de la implementación, desde el análisis inicial hasta el soporte a largo plazo. Nuestra labor es ejecutar cada una de estas líneas con la máxima calidad y eficiencia.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-slate-100 p-4 rounded-lg">
+                            <h3 class="font-semibold text-slate-800">Línea N°1: Análisis</h3>
+                            <p class="text-xs mt-1">Análisis de brechas (Gap Analysis) y de necesidades de migración de datos.</p>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-lg">
+                            <h3 class="font-semibold text-slate-800">Línea N°2: Implementación</h3>
+                            <p class="text-xs mt-1">Servicio técnico por demanda para implementar, operar, migrar y atender necesidades adicionales.</p>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-lg">
+                            <h3 class="font-semibold text-slate-800">Línea N°3: Capacitación</h3>
+                            <p class="text-xs mt-1">Servicio por demanda para la formación del personal del Grupo INS.</p>
+                        </div>
+                        <div class="bg-slate-100 p-4 rounded-lg">
+                            <h3 class="font-semibold text-slate-800">Líneas N°4-15: Suscripciones</h3>
+                            <p class="text-xs mt-1">Adquisición y renovación de suscripciones de la solución por 4 años.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-slate-700 mt-8 mb-4">Procesos de Negocio a Abordar</h3>
+                    <p class="mb-6 text-sm text-slate-600">Nuestra implementación cubrirá integralmente la cadena de valor del negocio asegurador del Grupo INS. El siguiente diagrama ilustra los macroprocesos clave que transformaremos.</p>
+                    <div class="flex flex-wrap gap-2 text-center text-xs font-medium">
+                        <div class="flex-1 p-3 bg-sky-100 text-sky-800 rounded-md">Config. Productos</div>
+                        <div class="p-3 text-slate-500">➔</div>
+                        <div class="flex-1 p-3 bg-sky-100 text-sky-800 rounded-md">Suscripción y Pólizas</div>
+                        <div class="p-3 text-slate-500">➔</div>
+                        <div class="flex-1 p-3 bg-sky-100 text-sky-800 rounded-md">Cobranza y Pagos</div>
+                        <div class="p-3 text-slate-500">➔</div>
+                        <div class="flex-1 p-3 bg-sky-100 text-sky-800 rounded-md">Gestión de Siniestros</div>
+                        <div class="p-3 text-slate-500">➔</div>
+                        <div class="flex-1 p-3 bg-sky-100 text-sky-800 rounded-md">Reaseguro y Contabilidad</div>
+                    </div>
+                    
+                    <h3 class="text-lg font-semibold text-slate-700 mt-8 mb-4">Integraciones Clave</h3>
+                    <p class="mb-6 text-sm text-slate-600">Un factor crítico de éxito es la interoperabilidad. La solución Acsel/Suite deberá integrarse de manera fluida con los siguientes sistemas institucionales del Grupo INS:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="p-4 bg-gray-100 rounded-lg"><span class="block text-2xl">🗃️</span><span class="text-sm font-semibold">MDM</span></div>
+                        <div class="p-4 bg-gray-100 rounded-lg"><span class="block text-2xl">🤝</span><span class="text-sm font-semibold">CRM</span></div>
+                        <div class="p-4 bg-gray-100 rounded-lg"><span class="block text-2xl">📊</span><span class="text-sm font-semibold">BI</span></div>
+                        <div class="p-4 bg-gray-100 rounded-lg"><span class="block text-2xl">🏥</span><span class="text-sm font-semibold">HIS</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="rol" class="content-section">
+                 <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-bold text-sky-800 mb-2">Mi Rol y Formación Obligatoria</h2>
+                    <p class="mb-4 text-sm text-slate-600">Cada rol es vital para el éxito del proyecto. Seleccione su perfil para ver sus responsabilidades clave y el plan de formación obligatorio que debe completar en nuestra plataforma **Consis University**.</p>
+                    
+                    <div class="mb-6">
+                        <label for="role-selector" class="block text-sm font-medium text-slate-700 mb-2">Seleccione su rol:</label>
+                        <select id="role-selector" class="w-full max-w-md p-2 border border-slate-300 rounded-md shadow-sm focus:ring-sky-500 focus:border-sky-500">
+                            <option value="general">-- Ver Resumen General --</option>
+                            <option value="director">Director de Proyecto</option>
+                            <option value="pmo">PMO (Oficial de Gestión de Proyectos)</option>
+                            <option value="qa">Personal de QA</option>
+                            <option value="dev">Desarrollador / Técnico</option>
+                            <option value="consultor">Consultor de Productos</option>
+                        </select>
+                    </div>
+
+                    <div id="role-details" class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-lg font-semibold text-slate-700 mb-3">📋 Responsabilidades Clave</h3>
+                            <div id="role-responsibilities" class="text-sm space-y-3 p-4 bg-slate-50 rounded-lg border"></div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-slate-700 mb-3">🎓 Formación en Consis University</h3>
+                            <div id="role-training" class="text-sm space-y-2 p-4 bg-slate-50 rounded-lg border"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="metodologia" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-bold text-sky-800 mb-2">Metodología y Estándares de Trabajo</h2>
+                    <p class="mb-6 text-sm text-slate-600">Nuestra ejecución se basará en una combinación de las mejores prácticas de Consis y los estándares del cliente para garantizar la sinergia, la calidad y la eficiencia.</p>
+
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border bg-gray-50">
+                            <h3 class="font-semibold">🚀 Enfoque Ágil de Consis</h3>
+                            <p class="text-sm mt-1">Aplicaremos nuestras metodologías probadas, con un fuerte enfoque en marcos de trabajo **ágiles**. Esto nos permitirá realizar entregas incrementales de funcionalidades, aportando valor al cliente de manera temprana y continua, y adaptándonos a los cambios de forma eficiente.</p>
+                        </div>
+                        <div class="p-4 rounded-lg border bg-gray-50">
+                            <h3 class="font-semibold">🏛️ Estándares del Grupo INS</h3>
+                            <p class="text-sm mt-1">El cliente cuenta con una **Metodología de Administración de Proyectos (MAP)** y estándares para la Construcción y Liberación de Soluciones Tecnológicas (BAI03 y BAI07). Debemos alinearnos a estos marcos de trabajo, validando y complementando con nuestra propia metodología para asegurar la cohesión del proyecto.</p>
+                        </div>
+                        <div class="p-4 rounded-lg border bg-gray-50">
+                            <h3 class="font-semibold">📄 Propiedad y Formato de la Documentación</h3>
+                            <p class="text-sm mt-1">Es crucial recordar que todos los documentos generados durante el proyecto son **propiedad absoluta del Instituto Nacional de Seguros**. No deben contener marcas de "propiedad de Consis". Además, toda la documentación funcional y de usuario final debe entregarse obligatoriamente en **idioma español**.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="gobernanza" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-bold text-sky-800 mb-2">Gobernanza del Proyecto</h2>
+                    <p class="mb-6 text-sm text-slate-600">La gobernanza establece las reglas de compromiso, seguridad y comunicación. El cumplimiento estricto de estas directrices es mandatorio para todo el equipo.</p>
+                    
+                    <div id="accordion-container" class="space-y-2">
+                        <div class="accordion-item border rounded-lg">
+                            <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200 transition">
+                                <span>🛡️ Seguridad de la Información y Confidencialidad</span>
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content p-4 border-t hidden text-sm">
+                                <p class="mb-2">La seguridad es un pilar no negociable. Se espera el máximo rigor de todo el personal.</p>
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>Acuerdo de Confidencialidad:</strong> Todo el personal deberá firmar el acuerdo del Grupo INS, comprometiéndose a una confidencialidad absoluta.</li>
+                                    <li><strong>Protección de Datos:</strong> Prohibida la divulgación o fuga de información. Debemos aplicar los más altos estándares (ISO/IEC 27001, NIST, COBIT, Ley 8968).</li>
+                                    <li><strong>Monitoreo de Accesos:</strong> Todos los accesos a la red y sistemas del Grupo INS serán restringidos y monitoreados.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border rounded-lg">
+                            <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200 transition">
+                                <span>💬 Comunicación y Coordinación</span>
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content p-4 border-t hidden text-sm">
+                                <p class="mb-2">La comunicación fluida y documentada es clave para la alineación del equipo y con el cliente.</p>
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>Reuniones Periódicas:</strong> Se mantendrán reuniones de seguimiento con las contrapartes del INS.</li>
+                                    <li><strong>Herramientas:</strong> Se utilizará **Microsoft Teams** para las sesiones remotas, las cuales serán grabadas para fines de documentación.</li>
+                                    <li><strong>Contacto Principal:</strong> La coordinación del servicio se centralizará a través de **Yolanda Ceciliano Jiménez**.</li>
+                                    <li><strong>Otros Administradores de Contrato:</strong> Marvin Avendaño Guzmán, Gustavo Calderón Miranda, María Umaña Rodríguez, Shirley Chaves Marín y Katty Ramírez Hernández.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item border rounded-lg">
+                            <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-semibold bg-slate-100 hover:bg-slate-200 transition">
+                                <span>🚚 Requisitos de Migración de Datos</span>
+                                <span class="accordion-icon">▼</span>
+                            </button>
+                            <div class="accordion-content p-4 border-t hidden text-sm">
+                                <p class="mb-2">La migración de datos desde los sistemas legados es una de las fases más críticas y complejas del proyecto.</p>
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li><strong>Estrategia:</strong> Deberemos proponer al menos dos estrategias viables para la migración de las carteras de Seguros Personales, Generales y Solidarios.</li>
+                                    <li><strong>Alcance de la Estrategia:</strong> Debe contemplar el tratamiento de siniestros en gestión y la conservación del historial de siniestralidad de los clientes.</li>
+                                    <li><strong>Ejecución:</strong> Consis proveerá el personal y las herramientas para la extracción, homologación, conversión, traslado y carga de los datos.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="recursos" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-bold text-sky-800 mb-2">Recursos y Documentos Clave</h2>
+                    <p class="mb-6 text-sm text-slate-600">La correcta ejecución del proyecto requiere la consulta constante de documentos de referencia. Es fundamental que todo el equipo se familiarice con ellos. A continuación se listan los anexos más importantes mencionados en el pliego de condiciones.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="border p-4 rounded-lg bg-gray-50">
+                            <h3 class="font-semibold text-gray-800">📖 Anexo N°6: Glosario</h3>
+                            <p class="text-xs mt-1">Define la terminología específica del proyecto y de la industria aseguradora de Costa Rica. Su dominio es **imperativo** para la comunicación efectiva.</p>
+                        </div>
+                        <div class="border p-4 rounded-lg bg-gray-50">
+                            <h3 class="font-semibold text-gray-800">📋 Anexo N°21: Detalle de Entregables</h3>
+                            <p class="text-xs mt-1">Describe todos los productos de trabajo requeridos para cada línea de servicio y sus criterios de aceptación. Es nuestra guía de lo que debemos construir.</p>
+                        </div>
+                        <div class="border p-4 rounded-lg bg-gray-50">
+                            <h3 class="font-semibold text-gray-800">🏢 Organigrama Grupo INS</h3>
+                            <p class="text-xs mt-1">Familiarizarse con la estructura del cliente es clave para entender las interacciones, las áreas de negocio y las necesidades de los stakeholders.</p>
+                        </div>
+                        <div class="border p-4 rounded-lg bg-gray-50">
+                            <h3 class="font-semibold text-gray-800">📜 Pliego de Condiciones</h3>
+                            <p class="text-xs mt-1">El documento maestro que rige todo el proyecto, detallando el alcance, los requisitos técnicos, legales y formales de la contratación.</p>
+                        </div>
+                         <div class="border p-4 rounded-lg bg-gray-50">
+                            <h3 class="font-semibold text-gray-800">⚖️ Ley 8968 y Normativa</h3>
+                            <p class="text-xs mt-1">Referencia a la "Ley de Protección de la Persona Frente al Tratamiento de sus Datos Personales" y otros estándares como ISO 27001, NIST y COBIT que rigen la seguridad.</p>
+                        </div>
+                         <div class="border p-4 rounded-lg bg-gray-50">
+                            <h3 class="font-semibold text-gray-800">⚙️ Estándares BAI03 y BAI07</h3>
+                            <p class="text-xs mt-1">Normativas internas del Grupo INS para la Construcción y Liberación de Soluciones Tecnológicas a las que debemos ajustarnos.</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 border-t pt-6">
+                         <h3 class="text-lg font-semibold text-slate-700 mb-4">Visualizar Documentos de Referencia</h3>
+                         <div class="flex flex-wrap gap-4">
+                            <button data-doc="organigrama" class="doc-button bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition">
+                                Imprimir Organigrama
+                            </button>
+                            <button data-doc="anexo21" class="doc-button bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition">
+                                Ver Anexo 21 (Entregables)
+                            </button>
+                            <button data-doc="anexo6" class="doc-button bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition">
+                                Ver Anexo 6 (Glosario)
+                            </button>
+                         </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        
+        <footer class="text-center py-4 mt-8">
+            <p class="text-xs text-slate-500">© 2025 Consis International. Todos los derechos reservados. Proyecto del Nuevo Core de Grupo INS.</p>
+            <p class="text-xs text-slate-500">Elaborado por Gerencia de Formación - Consis University.</p>
+        </footer>
+    </div>
+    
+    <div id="document-modal" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-4xl">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 id="modal-title" class="text-xl font-bold"></h3>
+                <button id="modal-close-button" class="text-2xl font-bold text-slate-500 hover:text-slate-800">&times;</button>
+            </div>
+            <div id="modal-content" class="p-6 overflow-y-auto modal-content">
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab-button');
+            const sections = document.querySelectorAll('.content-section');
+            const roleSelector = document.getElementById('role-selector');
+            const roleResponsibilitiesEl = document.getElementById('role-responsibilities');
+            const roleTrainingEl = document.getElementById('role-training');
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            
+            const modal = document.getElementById('document-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalContent = document.getElementById('modal-content');
+            const modalCloseButton = document.getElementById('modal-close-button');
+            const docButtons = document.querySelectorAll('.doc-button');
+
+            const documentData = {
+                organigrama: {
+                    title: 'Organigrama Corporativo - Grupo INS',
+                    action: () => {
+                        // Open the PDF in a new window/tab
+                        const pdfWindow = window.open('02-organigrama-corporativo-agosto-2024.pdf', '_blank');
+                        if (pdfWindow) {
+                            // Attempt to print after a short delay to allow PDF to load
+                            pdfWindow.onload = () => {
+                                setTimeout(() => {
+                                    try {
+                                        pdfWindow.print();
+                                    } catch (e) {
+                                        console.error("Error al intentar imprimir el PDF:", e);
+                                        // If print fails, the PDF is still open in the new tab for manual printing
+                                    }
+                                }, 100); // Small delay
+                            };
+                            pdfWindow.onerror = () => {
+                                console.error("Error al cargar el PDF para imprimir.");
+                            };
+                        } else {
+                            // Fallback if window.open is blocked (e.g., by pop-up blocker)
+                            alert("El navegador bloqueó la apertura de la ventana de impresión. Por favor, deshabilite el bloqueador de ventanas emergentes o imprima el PDF manualmente desde la nueva pestaña.");
+                        }
+                    }
+                },
+                anexo21: {
+                    title: 'Anexo 21: Detalle de Entregables (Resumen)',
+                    content: `
+                        <h4 class="font-bold text-lg mb-2">Estrategia de Capacitación</h4>
+                        <p class="text-sm mb-4">Consiste en proporcionar a los usuarios las habilidades y conocimientos necesarios para utilizar eficazmente la aplicación del nuevo Core de Seguros. Aplica a las líneas 1, 2, 3 y Suscripción.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <h5 class="font-semibold">Plan de Estrategia de Capacitación</h5>
+                                <p class="text-sm mb-2">Documento que orienta la capacitación de los funcionarios del Grupo INS en las diferentes herramientas. Debe ser funcional y técnica, en un orden lógico.</p>
+                                <p class="text-xs font-semibold">Criterios de Aceptación Clave:</p>
+                                <ul class="list-disc list-inside text-xs space-y-1 mt-1">
+                                    <li>Identificar claramente objetivos y metas.</li>
+                                    <li>Especificar habilidades, conocimientos y competencias a desarrollar.</li>
+                                    <li>Definir roles y funciones a capacitar.</li>
+                                    <li>Identificar métodos y herramientas (talleres, e-learning, etc.).</li>
+                                    <li>Asignar responsabilidades y establecer KPIs.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold">Plan de Ejecución de la Capacitación</h5>
+                                <p class="text-sm mb-2">Asegura que las sesiones de capacitación se lleven a cabo de manera exitosa y se cumplan los objetivos de desarrollo de habilidades.</p>
+                                <p class="text-xs font-semibold">Criterios de Aceptación Clave:</p>
+                                <ul class="list-disc list-inside text-xs space-y-1 mt-1">
+                                    <li>Detallar fechas, horarios y lugares/plataformas.</li>
+                                    <li>Tener una agenda clara para cada sesión.</li>
+                                    <li>Tener una agenda clara para cada sesión.</li>
+                                    <li>Especificar instructores y tener todos los materiales disponibles.</li>
+                                    <li>Fomentar la interactividad y participación.</li>
+                                    <li>Recoger retroalimentación de los participantes.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                anexo6: {
+                    title: 'Anexo 6: Glosario de Términos Clave',
+                    content: `
+                        <dl class="space-y-4">
+                            <div>
+                                <dt class="font-semibold">Seguros de Daños</dt>
+                                <dd class="text-sm text-slate-600 pl-4">Tiene como fin indemnizar las pérdidas sufridas por el patrimonio. Se divide en seguro de cosas y seguro de responsabilidad civil.</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold">Seguros Personales</dt>
+                                <dd class="text-sm text-slate-600 pl-4">Garantizan a la persona contra los riesgos que amenacen su vida, su integridad y su salud.</dd>
+                            </div>
+                            <div>
+                                <dt class="font-semibold">Seguros Solidarios</dt>
+                                <dd class="text-sm text-slate-600 pl-4">Buscan prever mecanismos de protección para enfrentar contingencias sociales. Ej: riesgos del trabajo y seguro obligatorio automotor.</dd>
+                            </div>
+                             <div>
+                                <dt class="font-semibold">Solución base</dt>
+                                <dd class="text-sm text-slate-600 pl-4">La herramienta de software que provee las funciones esenciales para administrar y operar un negocio de seguros (Configuración de Productos, Suscripción, Administración de pólizas, Siniestros, etc.).</dd>
+                            </div>
+                             <div>
+                                <dt class="font-semibold">Solución complementaria</dt>
+                                <dd class="text-sm text-slate-600 pl-4">Conjunto de productos adicionales a la solución base que son indispensables para la atención integral de los requerimientos.</dd>
+                            </div>
+                        </dl>
+                    `
+                }
+            };
+
+            const roleData = {
+                director: {
+                    responsibilities: [
+                        "Liderar la relación estratégica con la contraparte del INS.",
+                        "Coordinar avances y asegurar el cumplimiento de los objetivos del proyecto.",
+                        "Asistir a reuniones periódicas y ser responsable del levantamiento de minutas.",
+                        "Asegurar la alineación del proyecto con las expectativas del cliente."
+                    ],
+                    training: {
+                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud"],
+                        optional: ["Inducción Básica de Seguros", "Atención al Cliente"]
+                    }
+                },
+                pmo: {
+                    responsibilities: [
+                        "Asegurar la adherencia a la metodología de proyecto definida (Agile + MAP del INS).",
+                        "Gestionar, actualizar y comunicar cronogramas y reportes de avance.",
+                        "Controlar la documentación y los entregables del proyecto.",
+                        "Facilitar la comunicación y coordinación entre los equipos."
+                    ],
+                    training: {
+                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud"],
+                        optional: []
+                    }
+                },
+                qa: {
+                    responsibilities: [
+                        "Participar activamente en todo el ciclo de pruebas de la solución.",
+                        "Comunicar errores e incidencias de forma clara y detallada en Jira.",
+                        "Colaborar estrechamente con el Grupo INS en las pruebas y revisiones de seguridad.",
+                        "Validar que los entregables cumplen con los criterios de aceptación."
+                    ],
+                    training: {
+                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud", "Inducción Básica de Seguros"],
+                        optional: []
+                    }
+                },
+                dev: {
+                    responsibilities: [
+                        "Operar en entornos de nube pública (AWS, Azure, GCP, etc.).",
+                        "Desarrollar e implementar la solución Core de Seguros (Java, DB).",
+                        "Realizar integraciones complejas con sistemas empresariales (MDM, CRM, BI, HIS).",
+                        "Asegurar que el código cumple con los estándares de seguridad y calidad."
+                    ],
+                    training: {
+                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud", "Levantamiento de Requerimientos Acsel Suite"],
+                        optional: ["Inducción Básica de Seguros"]
+                    }
+                },
+                consultor: {
+                    responsibilities: [
+                        "Participar activamente en el análisis de brechas (Gap Analysis).",
+                        "Diseñar la arquitectura de implementación en la nube.",
+                        "Configurar productos, reglas de negocio y administración de pólizas en Acsel/Suite.",
+                        "Colaborar en la definición de estrategias de migración de datos."
+                    ],
+                    training: {
+                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud", "Inducción Básica de Seguros", "Atención al Cliente", "Levantamiento de Requerimientos Acsel Suite"],
+                        optional: []
+                    }
+                },
+                general: {
+                    responsibilities: [
+                        "El equipo debe adaptarse a la zona horaria de Costa Rica (GMT-6).",
+                        "El idioma oficial del proyecto es el español.",
+                        "Se espera una dedicación del 100% para el equipo base.",
+                        "Mantener la continuidad del equipo de trabajo es crucial.",
+                        "Firmar el Acuerdo de Confidencialidad del Grupo INS.",
+                        "Completar la formación obligatoria en Consis University."
+                    ],
+                    training: {
+                        required: ["Perfiles de Cargos (Todos)", "Código de Ética de Consis (Todos)", "Comunicación Efectiva (Todos)", "Conociendo Jira Cloud (Roles técnicos y de gestión)"],
+                        optional: ["Inducción Básica de Seguros (Según rol)", "Atención al Cliente (Según rol)", "Levantamiento de Requerimientos Acsel Suite (Según rol)"]
+                    }
+                }
+            };
+
+            function activateTab(tabName) {
+                tabs.forEach(tab => {
+                    if (tab.dataset.tab === tabName) {
+                        tab.classList.add('tab-active');
+                        tab.classList.remove('tab-inactive');
+                    } else {
+                        tab.classList.add('tab-inactive');
+                        tab.classList.remove('tab-active');
+                    }
+                });
+                sections.forEach(section => {
+                    section.style.display = section.id === tabName ? 'block' : 'none';
+                });
+            }
+
+            function updateRoleDetails(role) {
+                const data = roleData[role];
+                if (!data) return;
+
+                roleResponsibilitiesEl.innerHTML = `<ul class="list-disc list-inside space-y-2">${data.responsibilities.map(r => `<li>${r}</li>`).join('')}</ul>`;
+                
+                let trainingHtml = '<ul>';
+                data.training.required.forEach(t => {
+                    trainingHtml += `<li class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500 mr-2" disabled><span class="font-semibold text-green-700">[Obligatorio]</span><span class="ml-2">${t}</span></li>`;
+                });
+                data.training.optional.forEach(t => {
+                    trainingHtml += `<li class="flex items-center"><input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500 mr-2" disabled><span class="font-semibold text-amber-700">[Si aplica]</span><span class="ml-2">${t}</span></li>`;
+                });
+                trainingHtml += '</ul>';
+                roleTrainingEl.innerHTML = trainingHtml;
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => activateTab(tab.dataset.tab));
+            });
+            
+            roleSelector.addEventListener('change', (e) => {
+                updateRoleDetails(e.target.value);
+            });
+
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const icon = item.querySelector('.accordion-icon');
+                header.addEventListener('click', () => {
+                    const isVisible = !content.classList.contains('hidden');
+                    content.classList.toggle('hidden');
+                    icon.textContent = isVisible ? '▼' : '▲';
+                });
+            });
+
+            function openModal(docId) {
+                const data = documentData[docId];
+                if (data) {
+                    if (data.action) {
+                        data.action(); // Execute the action if defined (e.g., open PDF or print)
+                        // No need to close modal here, as print action doesn't use it.
+                    } else {
+                        modalTitle.textContent = data.title;
+                        modalContent.innerHTML = data.content;
+                        modal.classList.remove('hidden');
+                    }
+                }
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+            }
+
+            docButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    openModal(button.dataset.doc);
+                });
+            });
+
+            modalCloseButton.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            const ctx = document.getElementById('projectPhasesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Análisis de Brechas', 'Implementación y Migración', 'Capacitación', 'Suscripción y Soporte'],
+                    datasets: [{
+                        label: 'Duración/Tipo',
+                        data: [2, 6, 6, 6],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.7)',
+                            'rgba(16, 185, 129, 0.7)',
+                            'rgba(245, 158, 11, 0.7)',
+                            'rgba(107, 114, 128, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(59, 130, 246, 1)',
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(245, 158, 11, 1)',
+                            'rgba(107, 114, 128, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Duración en Meses / Tipo de Servicio'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let text = '';
+                                    if (context.label === 'Análisis de Brechas') {
+                                        text = `Plazo de 2 meses`;
+                                    } else {
+                                        text = `Servicio por demanda durante 6 meses`;
+                                    }
+                                    return `${context.label}: ${text}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            activateTab('inicio');
+            updateRoleDetails('general');
+        });
+    </script>
+</body>
+</html>
