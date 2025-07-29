@@ -87,7 +87,7 @@
 					<div class="flex flex-col sm:flex-row justify-between items-center">
 					
 					<!--    <h1 class="text-4xl md:text-5xl font-bold text-sky-900 mb-4">Capacitación para la Modernización del Grupo</h1> -->
-						<h2 class="text-xl font-bold text-sky-800 mb-4">Bienvenido al Proyecto de Transformación del Grupo INS</h2>
+						<h2 class="text-xl font-bold text-sky-800 mb-4">Bienvenido al Proyecto de Migración del Core del Grupo INS</h2>
 						<img src="logo-ins.png" alt="Logo Grupo INS" class="h-10">
                     </div>
 					
@@ -110,11 +110,11 @@
                     </div>
 
                     <div class="mt-8">
-                        <h3 class="text-lg font-semibold text-slate-700 mb-4 text-center">Fases Principales del Proyecto</h3>
+                        <h3 class="text-lg font-semibold text-slate-700 mb-4 text-center">Fase Inicial de Levantamiento de Información</h3>
                         <div class="chart-container">
                             <canvas id="projectPhasesChart"></canvas>
                         </div>
-                        <p class="text-xs text-center text-slate-500 mt-2">Este gráfico muestra las grandes etapas que componen el proyecto. La implementación y la migración se ejecutarán por demanda a lo largo del contrato.</p>
+                        <p class="text-xs text-center text-slate-500 mt-2">Este gráfico muestra las etapas que componen el la fase inicial. Muestra las actividades relacionadas con la información que se requerirá lo largo del proyecto.</p>
                     </div>
                 </div>
             </section>
@@ -480,7 +480,7 @@
                         "Validar que los entregables cumplen con los criterios de aceptación."
                     ],
                     training: {
-                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud", "Inducción Básica de Seguros"],
+                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud", "Inducción Básica de Seguros","Cursos de Acsel Suite"],
                         optional: []
                     }
                 },
@@ -492,7 +492,7 @@
                         "Asegurar que el código cumple con los estándares de seguridad y calidad."
                     ],
                     training: {
-                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud", "Levantamiento de Requerimientos Acsel Suite"],
+                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud", "Levantamiento de Requerimientos Acsel Suite","Cursos de Acsel Suite"],
                         optional: ["Inducción Básica de Seguros"]
                     }
                 },
@@ -504,7 +504,7 @@
                         "Colaborar en la definición de estrategias de migración de datos."
                     ],
                     training: {
-                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud", "Inducción Básica de Seguros", "Atención al Cliente", "Levantamiento de Requerimientos Acsel Suite"],
+                        required: ["Perfiles de Cargos", "Código de Ética de Consis", "Comunicación Efectiva", "Conociendo Jira Cloud", "Inducción Básica de Seguros", "Atención al Cliente", "Levantamiento de Requerimientos Acsel Suite","Cursos de Acsel Suite"],
                         optional: []
                     }
                 },
@@ -519,7 +519,7 @@
                     ],
                     training: {
                         required: ["Perfiles de Cargos (Todos)", "Código de Ética de Consis (Todos)", "Comunicación Efectiva (Todos)", "Conociendo Jira Cloud (Roles técnicos y de gestión)"],
-                        optional: ["Inducción Básica de Seguros (Según rol)", "Atención al Cliente (Según rol)", "Levantamiento de Requerimientos Acsel Suite (Según rol)"]
+                        optional: ["Inducción Básica de Seguros (Según rol)", "Atención al Cliente (Según rol)", "Levantamiento de Requerimientos Acsel Suite (Según rol)" ,"Cursos de Acsel Suite (Según rol)"]
                     }
                 }
             };
@@ -606,63 +606,81 @@
                 }
             });
 
-            const ctx = document.getElementById('projectPhasesChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Análisis de Brechas', 'Implementación y Migración', 'Capacitación', 'Suscripción y Soporte'],
-                    datasets: [{
-                        label: 'Duración/Tipo',
-                        data: [2, 6, 6, 6],
-                        backgroundColor: [
-                            'rgba(59, 130, 246, 0.7)',
-                            'rgba(16, 185, 129, 0.7)',
-                            'rgba(245, 158, 11, 0.7)',
-                            'rgba(107, 114, 128, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(59, 130, 246, 1)',
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(245, 158, 11, 1)',
-                            'rgba(107, 114, 128, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
+const ctx = document.getElementById('projectPhasesChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar', // Mantener como 'bar' pero con indexAxis: 'y' para barras horizontales
+    data: {
+        labels: ['Análisis de Brechas', 'Implementación y Migración', 'Capacitación', 'Suscripción y Soporte'],
+        datasets: [
+            {
+                label: 'Mes de Inicio', // Este dataset representará el "desfase"
+                data: [0, 1, 1, 1], // 0 para Análisis de Brechas, 1 para las otras (empiezan después de 2 meses de Análisis)
+                backgroundColor: 'rgba(0,0,0,0)', // Invisible
+                borderColor: 'rgba(0,0,0,0)', // Invisible
+                stack: 'Stack 0', // Apilar con el siguiente dataset
+                barThickness: 20 // Ajusta el grosor de la barra si es necesario
+            },
+            {
+                label: 'Duración/Tipo',
+                data: [1, 7, 7, 7], // Análisis de Brechas dura  mes. Las otras actividades duran 7 meses desde su inicio.
+                backgroundColor: [
+                    'rgba(59, 130, 246, 0.7)', // Color para Análisis de Brechas
+                    'rgba(16, 185, 129, 0.7)', // Color para Implementación y Migración
+                    'rgba(245, 158, 11, 0.7)', // Color para Capacitación
+                    'rgba(107, 114, 128, 0.7)'  // Color para Suscripción y Soporte
+                ],
+                borderColor: [
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(245, 158, 11, 1)',
+                    'rgba(107, 114, 128, 1)'
+                ],
+                borderWidth: 1,
+                stack: 'Stack 0' // Apilar con el dataset anterior
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y', // Hace las barras horizontales
+        scales: {
+            x: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Duración en Meses' // Cambiado a 'Duración en Meses' para mayor claridad
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Duración en Meses / Tipo de Servicio'
+                stacked: true // Habilita el apilamiento de barras en el eje X
+            },
+            y: {
+                stacked: true // Habilita el apilamiento de barras en el eje Y (para cada etiqueta)
+            }
+        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let text = '';
+                        // Asegúrate de que el tooltip solo muestre información para el dataset de "Duración/Tipo"
+                        if (context.datasetIndex === 1) { // Esto es crucial para ignorar el dataset de "Mes de Inicio"
+                            if (context.label === 'Análisis de Brechas') {
+                                text = `Plazo de 2 meses`;
+                            } else {
+                                text = `Servicio por demanda durante 7 meses`; // Ajustado a 7 meses según tu data
                             }
+                            return `${context.label}: ${text}`;
                         }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let text = '';
-                                    if (context.label === 'Análisis de Brechas') {
-                                        text = `Plazo de 2 meses`;
-                                    } else {
-                                        text = `Servicio por demanda durante 6 meses`;
-                                    }
-                                    return `${context.label}: ${text}`;
-                                }
-                            }
-                        }
+                        return ''; // No mostrar tooltip para el dataset de "Mes de Inicio"
                     }
                 }
-            });
-
+            }
+        }
+    }
+});
             activateTab('inicio');
             updateRoleDetails('general');
         });
