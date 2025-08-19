@@ -1,4 +1,4 @@
-﻿ <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -9,18 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals with Corporate Accents -->
-    <!-- Application Structure Plan: Se ha diseñado una SPA con navegación por pestañas (Inicio, Alcance, Mi Rol, Metodología, Gobernanza, Recursos). Esta estructura segmenta la información compleja del kickoff en bloques temáticos y digeribles. La sección más importante es "Mi Rol", que es interactiva y permite al usuario seleccionar su perfil para ver dinámicamente sus responsabilidades y formación obligatoria. Este enfoque orientado a roles mejora drásticamente la usabilidad en comparación con un documento lineal, ya que cada miembro del equipo puede acceder directamente a la información que más le concierne, facilitando una incorporación rápida y eficiente. -->
-    <!-- Visualization & Content Choices: 
-        - Visión General (Texto/Iconos): Informar. Presentación clara de los objetivos.
-        - Fases del Proyecto (Gráfico de Barras - Chart.js): Informar/Organizar. Visualiza las etapas principales del proyecto de forma sencilla. Interacción con tooltips.
-        - Líneas de Servicio (Tarjetas HTML/CSS): Organizar. Agrupa los 15 servicios en categorías lógicas para una fácil comprensión.
-        - Procesos de Negocio (Diagrama de Flujo HTML/CSS): Organizar. Muestra la cadena de valor del seguro que se abordará.
-        - Roles y Responsabilidades (Selector Dinámico JS): Personalizar/Informar. El usuario selecciona su rol y el contenido se actualiza. Es la interacción clave para personalizar la experiencia.
-        - Formación Obligatoria (Lista de Verificación Dinámica JS): Informar/Organizar. Se muestra la formación específica para el rol seleccionado.
-        - Seguridad y Comunicación (Acordeón HTML/JS): Organizar. Condensa información densa en secciones expandibles.
-        - Justificación: La combinación de texto, diagramas visuales y elementos interactivos convierte un documento estático en una herramienta de aprendizaje dinámica, adaptada a las necesidades de cada rol dentro del equipo del proyecto. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body { font-family: 'Inter', sans-serif; }
         .tab-active { border-color: #0284c7; color: #0284c7; background-color: #f0f9ff; }
@@ -30,6 +18,18 @@
         .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
         @media (min-width: 768px) { .chart-container { height: 350px; } }
         .modal-content { max-height: 80vh; }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-image {
+            margin-top: 15px;
+            margin-left: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="bg-stone-50 text-slate-800">
@@ -38,21 +38,16 @@
         <header class="bg-white shadow-sm sticky top-0 z-20">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div class="flex flex-col sm:flex-row justify-between items-center"> 
-				<img src="logo-consis.png" alt="Logo Consis" class="h-10"> 
+				<img src="logo-consis.jpg" alt="Logo Consis" class="h-10"> 
                     <div>
 					   
-				    <!-- Título -->
-                        <div class="text-2xl font-bold text-sky-800">
-			               <!-- <img src="logo-consis.png" alt="Logo Consis" class="h-10"> -->
-                            Grupo<span class="font-normal text-sky-600"> INS </span> | Proyecto Core de Seguros | Acsel Suite
+				    <div class="text-2xl font-bold text-sky-800">
+			               Grupo<span class="font-normal text-sky-600"> INS </span> | Proyecto Core de Seguros | Acsel Suite
                         </div> 
-                    <!--    <h1 class="text-2xl font-bold text-slate-900">Proyecto Core de Seguros</h1>
-                        <p class="text-sm text-slate-500">Cliente: <span class="font-semibold">Grupo INS</span> | Solución: <span class="font-semibold">Consis Acsel/Suite</span></p> -->
                     </div>
                     <div class="mt-4 sm:mt-0">
-                       	 <img src="logo-university.png" alt="Logo Consis University" class="h-10">
-						<!-- <img src="https://i.imgur.com/r113n4x.png" alt="Logos Consis y Grupo INS" class="h-10" onerror="this.style.display='none'"> -->
-                    </div>
+                       	 <img src="logo-university.jpg" alt="Logo Consis University" class="h-10">
+						</div>
                 </div>
                 <nav class="mt-4 -mb-4 border-b border-slate-200">
                     <div class="flex flex-wrap -mb-px space-x-4">
@@ -86,17 +81,13 @@
 					<div class="text-2xl font-bold text-sky-800">
 					<div class="flex flex-col sm:flex-row justify-between items-center">
 					
-					<!--    <h1 class="text-4xl md:text-5xl font-bold text-sky-900 mb-4">Capacitación para la Modernización del Grupo</h1> -->
-						<h2 class="text-xl font-bold text-sky-800 mb-4">Bienvenido al Proyecto de Migración del Core del Grupo INS</h2>
-						<img src="logo-ins.png" alt="Logo Grupo INS" class="h-10">
+					<h2 class="text-xl font-bold text-sky-800 mb-4">Bienvenido al Proyecto de Migración del Core del Grupo INS</h2>
+						<img src="logo-ins.jpg" alt="Logo Grupo INS" class="h-10">
                     </div>
 					
 				    </div>
 					
-                 <!--   <h2 class="text-xl font-bold text-sky-800 mb-4">Bienvenido al Proyecto de Transformación del Grupo INS</h2>
-					<img src="logo-ins.png" alt="Logo Grupo INS" class="h-10">  
-				 -->
-                    <p class="mb-4">Este es un proyecto estratégico y de gran escala para nuestro cliente, el Grupo INS, y su participación es fundamental para nuestro éxito. El objetivo de esta aplicación es proporcionarle una visión general y contextualizar su rol para una integración rápida y efectiva. Aquí encontrará de forma interactiva toda la información clave del documento de familiarización.</p>
+                 <p class="mb-4">Este es un proyecto estratégico y de gran escala para nuestro cliente, el Grupo INS, y su participación es fundamental para nuestro éxito. El objetivo de esta aplicación es proporcionarle una visión general y contextualizar su rol para una integración rápida y efectiva. Aquí encontrará de forma interactiva toda la información clave del documento de familiarización.</p>
                     
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="bg-sky-50 p-4 rounded-lg border border-sky-200">
@@ -109,14 +100,18 @@
                         </div>
                     </div>
 
-                    <div class="mt-8">
+                    <div >
                         <h3 class="text-lg font-semibold text-slate-700 mb-4 text-center">Fase Inicial de Levantamiento de Información</h3>
-                        <div class="chart-container">
-                            <canvas id="projectPhasesChart"></canvas>
+                        <p class="text-xs text-center text-slate-500 mt-2">Haga clic sobre la imagen</p><!--<div class="chart-container"> -->
+                          
+                        <div class="step-image">
+                        <a href="analisis-brecha.png" target="_blank">
+                          <img src="analisis-brecha-400.png" alt="Impromptu Meeting"> 
+                        </a>
                         </div>
                         <p class="text-xs text-center text-slate-500 mt-2">Este gráfico muestra las etapas que componen el la fase inicial. Muestra las actividades relacionadas con la información que se requerirá lo largo del proyecto.</p>
                     </div>
-                </div>
+                <!--</div> -->
             </section>
 
             <section id="alcance" class="content-section">
@@ -606,81 +601,10 @@
                 }
             });
 
-const ctx = document.getElementById('projectPhasesChart').getContext('2d');
-new Chart(ctx, {
-    type: 'bar', // Mantener como 'bar' pero con indexAxis: 'y' para barras horizontales
-    data: {
-        labels: ['Análisis de Brechas', 'Implementación y Migración', 'Capacitación', 'Suscripción y Soporte'],
-        datasets: [
-            {
-                label: 'Mes de Inicio', // Este dataset representará el "desfase"
-                data: [0, 1, 1, 1], // 0 para Análisis de Brechas, 1 para las otras (empiezan después de 2 meses de Análisis)
-                backgroundColor: 'rgba(0,0,0,0)', // Invisible
-                borderColor: 'rgba(0,0,0,0)', // Invisible
-                stack: 'Stack 0', // Apilar con el siguiente dataset
-                barThickness: 20 // Ajusta el grosor de la barra si es necesario
-            },
-            {
-                label: 'Duración/Tipo',
-                data: [1, 7, 7, 7], // Análisis de Brechas dura  mes. Las otras actividades duran 7 meses desde su inicio.
-                backgroundColor: [
-                    'rgba(59, 130, 246, 0.7)', // Color para Análisis de Brechas
-                    'rgba(16, 185, 129, 0.7)', // Color para Implementación y Migración
-                    'rgba(245, 158, 11, 0.7)', // Color para Capacitación
-                    'rgba(107, 114, 128, 0.7)'  // Color para Suscripción y Soporte
-                ],
-                borderColor: [
-                    'rgba(59, 130, 246, 1)',
-                    'rgba(16, 185, 129, 1)',
-                    'rgba(245, 158, 11, 1)',
-                    'rgba(107, 114, 128, 1)'
-                ],
-                borderWidth: 1,
-                stack: 'Stack 0' // Apilar con el dataset anterior
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        indexAxis: 'y', // Hace las barras horizontales
-        scales: {
-            x: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Duración en Meses' // Cambiado a 'Duración en Meses' para mayor claridad
-                },
-                stacked: true // Habilita el apilamiento de barras en el eje X
-            },
-            y: {
-                stacked: true // Habilita el apilamiento de barras en el eje Y (para cada etiqueta)
-            }
-        },
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        let text = '';
-                        // Asegúrate de que el tooltip solo muestre información para el dataset de "Duración/Tipo"
-                        if (context.datasetIndex === 1) { // Esto es crucial para ignorar el dataset de "Mes de Inicio"
-                            if (context.label === 'Análisis de Brechas') {
-                                text = `Plazo de 2 meses`;
-                            } else {
-                                text = `Servicio por demanda durante 7 meses`; // Ajustado a 7 meses según tu data
-                            }
-                            return `${context.label}: ${text}`;
-                        }
-                        return ''; // No mostrar tooltip para el dataset de "Mes de Inicio"
-                    }
-                }
-            }
-        }
-    }
-});
+
+
+
+
             activateTab('inicio');
             updateRoleDetails('general');
         });
